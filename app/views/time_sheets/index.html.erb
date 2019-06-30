@@ -1,0 +1,17 @@
+<div>
+<table>
+		<tr>
+			<th>Project</th>
+		    <th>Time</th>
+		    <th>Description</th>
+		</tr>
+		<% @time_sheets.each do |t_s| %>
+        <tr>
+			<td><%= t_s.project.name %></td>
+			<td><%= t_s.project_time %></td>
+			<td><%= t_s.description %></td>
+		</tr>
+		<% end %>	
+	</table>
+	<%= link_to "new", new_time_sheet_path %>	
+</div>	

@@ -1,0 +1,41 @@
+<button class="btn btn-primary" name="button" id = "add" type="submit">
+ Add
+</button>
+<br><br>
+
+<%= form_for @time_sheet do |f| %>
+	<div id="buildyourform">
+	</div>
+	<br><br>
+	<%= f.submit 'Save Entries', id: "save" %>
+<% end %>
+<script>
+
+$(document).ready(function() {
+
+  $("#save").hide();
+  $("#add").click(function() {
+    var lastField = $("#buildyourform div:last");
+    var intId = (lastField && lastField.length && lastField.data("idx") + 1) || 1;
+    var fieldWrapper = $("<div class=\"fieldwrapper\" id=\"field" + intId + "\"/>");
+    fieldWrapper.data("idx", intId);
+    var projects = '<option value=""> Select </option>';
+    <% @projects.each do |obj| %>
+      projects += '<option value="<%= obj.id %>"> <%= obj.name %> </option>';
+    <% end %>
+    var time = $("<input class = \"datetimepicker\" name=\"time[]\" />");
+    var description = $("<input type=\"text\" name=\"description[]\" />");
+    var removeButton = $("<input type=\"button\" class=\"remove\" value=\"x\" />");
+    removeButton.click(function() {
+      $(this).parent().remove();
+    });
+    fieldWrapper.append('<select name = "projects[]">'+projects+'</select>');
+    fieldWrapper.append(time);
+    fieldWrapper.append(description);
+    fieldWrapper.append(removeButton);
+    $("#buildyourform").append(fieldWrapper);
+    $("#save").show();
+  });
+});
+  
+</script>
